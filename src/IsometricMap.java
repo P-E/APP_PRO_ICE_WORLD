@@ -22,27 +22,34 @@ public class IsometricMap implements MouseListener, MouseMotionListener, MouseWh
 	
 	private int MAX_X = Toolkit.getDefaultToolkit().getScreenSize().width;
 	private int MAX_Y = Toolkit.getDefaultToolkit().getScreenSize().height;
-	private IsometricSquare square ;
+	private IsometricSquare square, squareToPaintAvatarOn ;
 	private Point pHilight, pCliqued;
-	private int lineCliqued, rowCliqued, middleSquareLine, middleSquareRow ;
+	private int lineCliqued, rowCliqued, lineAvatar, rowAvatar,middleSquareLine, middleSquareRow ;
+	private int i,k,l;
+	private int width, height;
 	private int zoomLevel;
-	private boolean cliqued ;
-	private Point middlePoint;
+	private boolean cliqued, isMovingLinebyLine, isMovingRowbyRow;
+	private Point middlePoint, origin, squareCliquedPoint;
 
   
 
         public IsometricMap() {
-        	
-
-        	
+        	       	
         	middlePoint = new Point (MAX_X/2, MAX_Y/2);
         	cliqued = false;
         	middleSquareLine = 50;
         	middleSquareRow = 50;
+        	lineAvatar =50;
+        	rowAvatar =50;
+        	i = 0;
+        	k =0;
         	zoomLevel = 1;
+        	
         }
 
         public void paintMap(Graphics g, int frameSizeX, int frameSizeY) {
+        	
+        	
         	
         	if (pHilight !=null){
         		if (pHilight.x <= 40){
@@ -98,6 +105,7 @@ public class IsometricMap implements MouseListener, MouseMotionListener, MouseWh
     			}
         	}
         	
+        	
             
                 for (int line = 1 ; line<=100 ; line++) {
                 	for (int row = 100; row > 0; row --) {
@@ -126,16 +134,104 @@ public class IsometricMap implements MouseListener, MouseMotionListener, MouseWh
                					square.setCliqued(true);
                				}
                			}
-               		
+               			
+               			if (lineAvatar == square.getLine() && rowAvatar == square.getRow()){
+               				
+               				squareToPaintAvatarOn = square;
+               			}
                			
                			square.paintSquare(g);
                 	}
                 }
+                
+                squareToPaintAvatarOn.paintAvatarOnMap(g, i, k);
+                moveAvatar ();
            	}
 
+        public int getZoomLevel () {
+        	return zoomLevel;
+        }
+        
+        public void moveAvatar (){
+        	
+        	if (isMovingLinebyLine) {
+            	height = (MAX_Y/200)*zoomLevel;
+            	if (lineCliqued - lineAvatar > 0){
+            		if (Math.abs(k)>=height){
+            			lineAvatar++;
+            			i = 0;
+            			k = 0;
+            			l= 0;
+            		}
+            		else {
+            			i = -(int)(((double)l)*(((double)height)/50));
+            			k = (int)(((double)l)*(((double)height)/50));
+            			l++;
+            		}
+            	}
+            	
+            	else if (lineCliqued - lineAvatar < 0){
+            		if (Math.abs(k)>=height){
+            			lineAvatar--;
+            			i = 0;
+            			k = 0;
+            			l= 0;
+            		}
+            		else {
+            			i = (int)(((double)l)*(((double)height)/50));
+            			k = -(int)(((double)l)*(((double)height)/50));
+            			l++;
+            		}
+            	}
+            	
+            	else {
+            		isMovingLinebyLine = false;	
+            	}
+            }
+        	
+        	else if (isMovingRowbyRow) {
+            	height = (MAX_Y/200)*zoomLevel;
+            	if (rowCliqued - rowAvatar > 0){
+            		if (Math.abs(k)>=height){
+            			rowAvatar++;
+            			i = 0;
+            			k = 0;
+            			l = 0;
+            		}
+            		else {
+            			i = (int)(((double)l)*(((double)height)/50));
+            			k = (int)(((double)l)*(((double)height)/50));
+            			l++;
+            		}
+            	}
+            	
+            	else if (rowCliqued - rowAvatar < 0){
+            		if (Math.abs(k)>=height){
+            			rowAvatar--;
+            			i = 0;
+            			k = 0;
+            			l = 0;
+            		}
+            		else {
+            			i = -(int)(((double)l)*(((double)height)/50));
+            			k = -(int)(((double)l)*(((double)height)/50));
+            			l++;
+            		}
+            	}
+            	
+            	else {
+            		isMovingRowbyRow = false;
+            	}
+            }
+        	
+        	
+        }
+        
 		public void mousePressed(MouseEvent e) {
 			pCliqued = e.getPoint();
 			cliqued = true;
+			isMovingLinebyLine = true;
+			isMovingRowbyRow = true;
 		}
 
 		public void mouseMoved(MouseEvent e) {
@@ -145,8 +241,9 @@ public class IsometricMap implements MouseListener, MouseMotionListener, MouseWh
 		public void mouseWheelMoved(MouseWheelEvent e) {
 	        int notches = e.getWheelRotation();
 	        if (notches < 0 && zoomLevel < 10) {
-	             zoomLevel++;
-	        } else if (notches > 0 && zoomLevel > 1) {
+	            	zoomLevel++;
+	        } 
+	        else if (notches > 0 && zoomLevel > 1) {
 	             zoomLevel--;
 	        }
 	    }

@@ -17,13 +17,14 @@ public class IsometricSquare {
 	private int nextCenterX, nextCenterY, zoomLevel;
 	private Point origin;
 	private Polygon poly;
-	private Boolean highlighted, cliqued;
+	private boolean highlighted, cliqued, isAvatarOn;
 	
 	public IsometricSquare (int line, int row, int nextCenterX, int nextCenterY, int zoomLevel) {
 		this.line = line;
 		this.row = row;
 		this.nextCenterX = nextCenterX;
 		this.nextCenterY = nextCenterY;
+		this.zoomLevel = zoomLevel;
 		highlighted = false ;
 		cliqued = false ;
 		width = (MAX_X/200)*zoomLevel;
@@ -54,7 +55,7 @@ public class IsometricSquare {
                     g.fillPolygon(poly);
                 }
                 
-                else if (line%2 ==0) {
+                else if ((line-row)%2 ==0) {
                 	g.setColor(new Color (0,128,0));
                     g.fillPolygon(poly);
                 }
@@ -66,7 +67,15 @@ public class IsometricSquare {
                 
                 g.setColor(Color.BLACK);
         		g.drawPolygon(poly);
+        		
             }
+    
+    public void paintAvatarOnMap (Graphics g, int i, int k) {
+    	int x = poly.xpoints[0] + (int)(((double)i)*(((double)width)/((double)height)));
+		int y = poly.ypoints[1] + k;
+		g.setColor(Color.BLACK);
+		g.fillOval(x-(5/2)*zoomLevel, y-5*zoomLevel, 5*zoomLevel,5*zoomLevel);
+    }
     
     public int getLine () {
     	return line;
@@ -87,6 +96,10 @@ public class IsometricSquare {
     
     public void setCliqued (boolean cliqued) {
     	this.cliqued = cliqued;
+    }
+    
+    public void setIsAvatarOn (boolean isAvatarOn) {
+    	this.isAvatarOn = isAvatarOn;
     }
     
     }

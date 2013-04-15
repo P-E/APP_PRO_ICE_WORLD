@@ -44,7 +44,6 @@ public void paintTalking (Graphics g, int charPositionX, int charPositionY) {
 		bubbleY = charPositionY - 80 ;
 		
 		g.setColor(Color.BLACK);
-		g.fillOval(charPositionX-30/2, charPositionY-30, 30, 30);
 		g.fillOval(bubbleX+30/2, bubbleY+2,lengthBubble,40 );
 		g.fillPolygon(new int [] {charPositionX+CHAR_WIDTH+2,charPositionX+CHAR_WIDTH+17,charPositionX+CHAR_WIDTH/2+2}, new int []{(charPositionY-50),(charPositionY-50),charPositionY-3*(CHAR_HEIGHT/4)}, 3);
 		g.setColor(Color.WHITE);

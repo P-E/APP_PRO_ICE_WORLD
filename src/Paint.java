@@ -14,7 +14,7 @@ public class Paint extends JFrame {
 	private int TALK_VISIBLE_DURATION = 5000;
 	private Image image;
 	private Graphics buffer;
-	private Walking walking;
+	//private Walking walking;
 	private Weather weather;
 	private Talking talking;
 	private Yelling yelling;
@@ -29,9 +29,7 @@ public class Paint extends JFrame {
 	
 	public Paint () {
 
-		
-		walking = new Walking ();
-		addMouseListener (walking);
+
 		isometricMap = new IsometricMap ();
 		weather = new Weather ();
 		talking = new Talking ("prout prout prout", TALK_VISIBLE_DURATION);
@@ -40,10 +38,10 @@ public class Paint extends JFrame {
 		addMouseListener(isometricMap);
 		addMouseMotionListener(isometricMap);
 		addMouseWheelListener(isometricMap);
-		this.setBackground(Color.WHITE);
+		this.setBackground(new Color(0,162,232));
 		changeCursor("sword.gif");
 		new Animator ();
-		new Music ("music.wav");
+		//new Music ("music.wav");
 
 	}
 	
@@ -51,14 +49,9 @@ public class Paint extends JFrame {
 		
 		image= createImage(getSize().width,getSize().height);
 		buffer=image.getGraphics();
-		
 		isometricMap.paintMap(buffer,getWidth(),getHeight());
-		walking.paintWalking(buffer);
 		buffer.setColor(Color.WHITE);
-		
 		weather.paintWeather(buffer);
-		
-		talking.paintTalking (buffer, walking.getCharPositionX(), walking.getCharPositionY());
 		yelling.paintYelling(buffer);
 		g.drawImage(image,0,0,this);
 		
