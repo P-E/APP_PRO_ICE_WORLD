@@ -31,6 +31,7 @@ public class IsometricMap implements MouseListener, MouseMotionListener, MouseWh
 	private boolean cliqued, isMovingLinebyLine, isMovingRowbyRow;
 	private Point middlePoint, origin, squareCliquedPoint;
 
+
   
 
         public IsometricMap() {
@@ -225,6 +226,14 @@ public class IsometricMap implements MouseListener, MouseMotionListener, MouseWh
             }
         	
         	
+        }
+        
+        public int getLineAvatar () {
+        	return lineAvatar;
+        }
+        
+        public int getRowAvatar () {
+        	return rowAvatar;
         }
         
 		public void mousePressed(MouseEvent e) {

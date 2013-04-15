@@ -14,22 +14,23 @@ public class Paint extends JFrame {
 	private int TALK_VISIBLE_DURATION = 5000;
 	private Image image;
 	private Graphics buffer;
-	//private Walking walking;
 	private Weather weather;
 	private Talking talking;
 	private Yelling yelling;
 	private IsometricMap isometricMap;
+	private MiniMap miniMap;
 	
 	
 	public static void main (String [] args){
 		Paint paint = new Paint ();
 		paint.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		paint.setVisible(true);
+		
 	}
 	
 	public Paint () {
 
-
+		miniMap = new MiniMap ();
 		isometricMap = new IsometricMap ();
 		weather = new Weather ();
 		talking = new Talking ("prout prout prout", TALK_VISIBLE_DURATION);
@@ -38,7 +39,7 @@ public class Paint extends JFrame {
 		addMouseListener(isometricMap);
 		addMouseMotionListener(isometricMap);
 		addMouseWheelListener(isometricMap);
-		this.setBackground(new Color(0,162,232));
+		setBackground(new Color(0,162,232));
 		changeCursor("sword.gif");
 		new Animator ();
 		//new Music ("music.wav");
@@ -55,6 +56,9 @@ public class Paint extends JFrame {
 		yelling.paintYelling(buffer);
 		g.drawImage(image,0,0,this);
 		
+    
+        miniMap.paintMiniMap (g,isometricMap.getRowAvatar(),isometricMap.getLineAvatar());
+		
 	}
 	
 	public void changeCursor (String cursorFile) {
@@ -67,7 +71,6 @@ public class Paint extends JFrame {
 	class Animator implements Runnable {
 		private Thread thread;
 
-		
 		public Animator () {
 			thread = new Thread (this);
 			thread.start();
