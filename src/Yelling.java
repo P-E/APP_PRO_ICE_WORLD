@@ -18,7 +18,7 @@ public class Yelling {
     public Yelling (String message) {
         this.message = message ;
         display = true;
-        //Paint.me.yelling(message);
+
         doneSend = true;
 
         (new DisplayBubble ()).start();

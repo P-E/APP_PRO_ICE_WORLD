@@ -24,7 +24,7 @@ public class Talking {
             CHAR_WIDTH = 30;
             CHAR_HEIGHT = 30;
             lengthBubble= 100;
-    //        System.out.println(message);
+
             doneSend = true;
 
             (new DisplayBubble ()).start();

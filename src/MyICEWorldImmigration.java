@@ -1,7 +1,10 @@
 import iceworld.given.*;
 import org.json.simple.parser.ContainerFactory;
 import org.json.simple.parser.JSONParser;
+
+import java.awt.event.KeyAdapter;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
@@ -11,6 +14,8 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,9 +35,12 @@ import java.util.Map;
 //import the given classes/interfaces from the ICE World
 
 public class MyICEWorldImmigration{
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws IOException {
         String usernameFromField = "Patraporn.L";
         String passwordFromField = "7741578";
+
+
         // ----------------------------------------------------------
         // Firstly, you need to create your own class that implements
         // the iceworld.given.MyIcetizen interface. The class should
@@ -79,66 +87,70 @@ public class MyICEWorldImmigration{
         look2.gidW = "W046";
         tester.setIcetizenLook(look);
 
-        boolean loginTest = immigration.loginAlien();
-        boolean talkTest = immigration.talk("Hello");
-        boolean yellTest = immigration.yell("Hello");
-        boolean walkTest = immigration.walk(9, 4);
-        boolean customizeTest = immigration.customization(look2);
-        boolean logoutTest = immigration.logout();
+            boolean loginTest = immigration.loginAlien();
+            boolean talkTest = immigration.talk("Hello");
+            boolean yellTest = immigration.yell("Hello");
+            boolean walkTest = immigration.walk(50, 50);
+            boolean customizeTest = immigration.customization(look2);
+            boolean logoutTest = immigration.logout();
 
-        // ----------------------------------------------------------
-        // Do the login as an Alien
-        if (loginTest){
-            System.out.println("Login Alien OK");
-        }
-        // ----------------------------------------------------------
+            // ----------------------------------------------------------
+            // Do the login as an Alien
+            if (loginTest){
+                System.out.println("Login Alien OK");
+            }
+            // ----------------------------------------------------------
 
-        // ----------------------------------------------------------
-        // If you want to do the login as an Inhabitant
-        if (immigration.login(passwordFromField))
-        {
-        	System.out.println("Login OK");
-        }
-        // ----------------------------------------------------------
+            // ----------------------------------------------------------
+            // If you want to do the login as an Inhabitant
+            if (immigration.login(passwordFromField))
+            {
+                System.out.println("Login OK");
+            }
+            // ----------------------------------------------------------
 
-        // ----------------------------------------------------------
-        // Say "Hello"
-        if (talkTest){
-            System.out.println("Talk OK");
-        }
-        // ----------------------------------------------------------
+            // ----------------------------------------------------------
+            // Say "Hello"
+            if (talkTest){
+                System.out.println("Talk OK");
+            }
+            // ----------------------------------------------------------
 
-        // ----------------------------------------------------------
-        // Yell "Hello"
-        if (yellTest){
-            System.out.println("Yell OK");
-        }
-        // ----------------------------------------------------------
+            // ----------------------------------------------------------
+            // Yell "Hello"
+            if (yellTest){
+                System.out.println("Yell OK");
+            }
+            // ----------------------------------------------------------
 
-        // ----------------------------------------------------------
-        // Walk to the (9,4) location of the ICE World ground
-        if (walkTest){
-            System.out.println("Walk OK");
-        }
-        // ----------------------------------------------------------
+            // ----------------------------------------------------------
+            // Walk to the (9,4) location of the ICE World ground
+            if (walkTest){
+                System.out.println("Walk OK");
+            }
+            // ----------------------------------------------------------
 
-        // ----------------------------------------------------------
-        // Customize the look of the active Icetizen
+            // ----------------------------------------------------------
+            // Customize the look of the active Icetizen
 
-        if (customizeTest){
-            System.out.println("Customization OK");
-        }
-        // ----------------------------------------------------------
+            if (customizeTest){
+                System.out.println("Customization OK");
+            }
+            // ----------------------------------------------------------
 
-        // ----------------------------------------------------------
-        // Log out of the ICE World
-        if (logoutTest){
-            System.out.println("Logout OK");
-        }
+            // ----------------------------------------------------------
+            // Log out of the ICE World
+            if (logoutTest){
+                System.out.println("Logout OK");
+            }
+
+
         // ----------------------------------------------------------
         Login loginWindow = new Login("Login");
 
     }
+
+
 
 }
 

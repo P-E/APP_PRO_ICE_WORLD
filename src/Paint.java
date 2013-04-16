@@ -23,7 +23,8 @@ public class Paint extends JFrame {
 	private IsometricMap isometricMap;
 	private MiniMap miniMap;
     public static LoggedinUser me = new LoggedinUser();
-
+    private String talkMsg, yellMsg;
+    public static Messenger mymessenger = new Messenger();
 
     public void setLoggedinUser(LoggedinUser loggedinUser) {
         me = loggedinUser;
@@ -34,14 +35,21 @@ public class Paint extends JFrame {
 	public Paint (LoggedinUser loggedinUser) {
         this.setLayout(new BorderLayout());
         setLoggedinUser(loggedinUser);
+
         this.setSize(1280, 720);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
 
-
 		isoBackground = new IsoBackground ();
 		miniMap = new MiniMap ();
 		isometricMap = new IsometricMap ();
+
+        TalkingWindow talkingWindow = new TalkingWindow();
+        talkingWindow.setSize(600,110);
+
+        talkingWindow.setVisible(true);
+
+
 
 //        JMenuBar menuBar = new JMenuBar();
 //        JMenu TextSending = new JMenu("Send Text");
@@ -63,9 +71,10 @@ public class Paint extends JFrame {
 //        talkPanel.setVisible(true);
 //        this.add(talkPanel,BorderLayout.SOUTH);
 
+
         weather = new Weather ();
-		talking = new Talking ("pout pout pout", TALK_VISIBLE_DURATION);
-		yelling = new Yelling ("Cry Cry Cry");
+		talking = new Talking ("", TALK_VISIBLE_DURATION);
+		yelling = new Yelling ("");
 		addMouseListener(isometricMap);
 		addMouseMotionListener(isometricMap);
 		addMouseWheelListener(isometricMap);
@@ -80,7 +89,10 @@ public class Paint extends JFrame {
 
 	}
 	
-	
+	public static void logout(){
+        me.immigration.logout();
+        System.exit(0);
+    }
 	public void  paint(Graphics g) {
 		image= createImage(getSize().width,getSize().height);
 		buffer=image.getGraphics();
@@ -91,11 +103,26 @@ public class Paint extends JFrame {
 //		yelling.paintYelling(buffer);
 		miniMap.paintMiniMap (buffer,isometricMap.getRowAvatar(),isometricMap.getLineAvatar());
 		g.drawImage(image,0,0,this);
+        recieveMassage();
 		sendDataToServer ();
        
 		
 	}
-	
+
+    private void recieveMassage() {
+        if(mymessenger.isTalkSend){
+            talking = new Talking(mymessenger.getTalkMsg(),TALK_VISIBLE_DURATION);
+            mymessenger.setTalkMsg("");
+            mymessenger.switchTalkSend();
+        }
+        if(mymessenger.isYellSend){
+            yelling = new Yelling(mymessenger.getYellMsg());
+            mymessenger.setYellMsg("");
+            mymessenger.switchYellSend();
+        }
+    }
+
+
 	public void sendDataToServer () {
         //System.out.println("send data to server");
         //System.out.println(isometricMap.getCliqued());
@@ -106,13 +133,18 @@ public class Paint extends JFrame {
 		}
         if (talking.getTalk()){
             //System.out.println("talk");
-            me.talking(talking.getMessage());
+            if(talking.getMessage()!=""){
+                me.talking(talking.getMessage());
+            }
             talking.switchDoneSend();
         }
         if (yelling.getYelling()){
-            me.yelling(yelling.getMessage());
+            if(yelling.getMessage()!=""){
+                me.yelling(yelling.getMessage());
+            }
             yelling.switchDoneSend();
         }
+
 	}
 	
 	
