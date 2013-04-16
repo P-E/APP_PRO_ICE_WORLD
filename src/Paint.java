@@ -18,40 +18,54 @@ public class Paint extends JFrame {
 	private Graphics buffer;
 	private IsoBackground isoBackground;
 	private Weather weather;
-	//private Talking talking;
-	//private Yelling yelling;
+	private Talking talking;
+	private Yelling yelling;
 	private IsometricMap isometricMap;
 	private MiniMap miniMap;
-    public LoggedinUser me = new LoggedinUser();
+    public static LoggedinUser me = new LoggedinUser();
 
 
-
-
-
-	/*public static void main (String [] args){
-		Paint paint = new Paint ();
-		paint.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		paint.setVisible(true);
-
-	}*/
     public void setLoggedinUser(LoggedinUser loggedinUser) {
         me = loggedinUser;
+
     }
 
-    public LoggedinUser getLoggedinUser(){
-        return me;
-    }
-	public Paint () {
-        me.loggedin();
+
+	public Paint (LoggedinUser loggedinUser) {
+        this.setLayout(new BorderLayout());
+        setLoggedinUser(loggedinUser);
         this.setSize(1280, 720);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
+
+
 		isoBackground = new IsoBackground ();
 		miniMap = new MiniMap ();
 		isometricMap = new IsometricMap ();
-		weather = new Weather ();
-		//talking = new Talking ("prout prout prout", TALK_VISIBLE_DURATION);
-		//yelling = new Yelling ("WHAT THE FUCK");
+
+//        JMenuBar menuBar = new JMenuBar();
+//        JMenu TextSending = new JMenu("Send Text");
+//        JMenuItem talkMenu = new JMenuItem("Talk");
+//        JMenuItem yellMenu = new JMenuItem("Yell");
+//        TextSending.add(talkMenu);
+//        TextSending.add(yellMenu);
+//        menuBar.add(TextSending);
+//        this.setJMenuBar(menuBar);
+
+//        JPanel talkPanel = new JPanel();
+//        JLabel talkSign = new JLabel("Talk");
+//        JTextField talkMsg = new JTextField(10);
+//        JButton submitTalkButton = new JButton("Submit Talk");
+//        talkPanel.add(talkSign);
+//        talkPanel.add(talkMsg);
+//        talkPanel.add(submitTalkButton);
+//        talkPanel.setBackground(Color.WHITE);
+//        talkPanel.setVisible(true);
+//        this.add(talkPanel,BorderLayout.SOUTH);
+
+        weather = new Weather ();
+		talking = new Talking ("pout pout pout", TALK_VISIBLE_DURATION);
+		yelling = new Yelling ("Cry Cry Cry");
 		addMouseListener(isometricMap);
 		addMouseMotionListener(isometricMap);
 		addMouseWheelListener(isometricMap);
@@ -59,6 +73,8 @@ public class Paint extends JFrame {
 		changeCursor("sword.gif");
 		new Animator ();
 		this.pack();
+        me.loggedin();
+
 
 		//new Music ("music.wav");
 
@@ -72,7 +88,7 @@ public class Paint extends JFrame {
 		isometricMap.paintMap(buffer,getWidth(),getHeight());
 		buffer.setColor(Color.WHITE);
 		weather.paintWeather(buffer);
-		//yelling.paintYelling(buffer);
+//		yelling.paintYelling(buffer);
 		miniMap.paintMiniMap (buffer,isometricMap.getRowAvatar(),isometricMap.getLineAvatar());
 		g.drawImage(image,0,0,this);
 		sendDataToServer ();
@@ -81,9 +97,22 @@ public class Paint extends JFrame {
 	}
 	
 	public void sendDataToServer () {
+        //System.out.println("send data to server");
+        //System.out.println(isometricMap.getCliqued());
 		if (isometricMap.getCliqued()){
+            //System.out.println("walk");
 			me.walking(isometricMap.getLineCliqued(), isometricMap.getRowCliqued());
+            isometricMap.switchDoneSend();
 		}
+        if (talking.getTalk()){
+            //System.out.println("talk");
+            me.talking(talking.getMessage());
+            talking.switchDoneSend();
+        }
+        if (yelling.getYelling()){
+            me.yelling(yelling.getMessage());
+            yelling.switchDoneSend();
+        }
 	}
 	
 	

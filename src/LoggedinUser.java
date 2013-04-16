@@ -15,17 +15,6 @@ public class LoggedinUser {
     ICEWorldImmigration immigration;
     Icetizen me = new Icetizen();
 
-    public void setIcetizen(Icetizen me){
-        this.me = me;
-    }
-
-    public Icetizen getIcetizen(){
-        return me;
-    }
-
-    public ICEWorldImmigration getImmigration(){
-        return immigration;
-    }
 
     public String getUsername (){
         return this.username;
@@ -35,22 +24,29 @@ public class LoggedinUser {
     }
     public void setUsername(String givenUsername){
         username = givenUsername;
+        //System.out.println(username);
     }
     public void setPassword(String givenPassword){
         password = givenPassword;
+        //System.out.println(password);
     }
 
     public void loggedin(){
+        //System.out.println(password);
         me.setPassword(password);
         me.setUsername(username);
         me.setListeningPort(userConnectPort);
         me.setIcePortID(userIDPort);
+        //System.out.println(me.getPassword());
         immigration = new ICEWorldImmigration(me);
         immigration.login(me.getPassword());
+        immigration.walk(50,50);
+        System.out.println("Login!");
     }
 
     public void walking(int x,int y){
         immigration.walk(x,y);
+        //System.out.println("walk");
     }
     public void talking(String msg){
         immigration.talk(msg);

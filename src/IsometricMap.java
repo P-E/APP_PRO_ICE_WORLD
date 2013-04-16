@@ -1,13 +1,7 @@
 
 
 import java.applet.Applet;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Polygon;
-import java.awt.Robot;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -31,10 +25,11 @@ public class IsometricMap extends JPanel implements MouseListener, MouseMotionLi
 	private Image avatar;
 	private boolean cliqued, isMovingLinebyLine, isMovingRowbyRow;
 	private Point middlePoint, origin, squareCliquedPoint;
+    private boolean doneSend;
 
-  
 
-        public IsometricMap() {    	
+        public IsometricMap() {
+            this.setLayout(new BorderLayout());
         	middlePoint = new Point (MAX_X/2, MAX_Y/2);
         	cliqued = false;
         	middleSquareLine = 50;
@@ -44,12 +39,14 @@ public class IsometricMap extends JPanel implements MouseListener, MouseMotionLi
         	i = 0;
         	k =0;
         	zoomLevel = 1;
-        	avatar = getToolkit().getImage("images/avatar.png"); 
+        	avatar = getToolkit().getImage("images/avatar.png");
+
+
         }
 
         public void paintMap(Graphics g, int frameSizeX, int frameSizeY) {
         	
-        	
+
         	
         	if (pHilight !=null){
         		if (pHilight.x <= 40){
@@ -127,7 +124,8 @@ public class IsometricMap extends JPanel implements MouseListener, MouseMotionLi
                					if (square.contains(pCliqued)) {
                    					lineCliqued = square.getLine();
                    					rowCliqued = square.getRow();
-                                    System.out.println("Walking");
+                                    //System.out.println("Walking");
+                                    doneSend = true;
                    					cliqued = false;
                    				}
                				}
@@ -149,7 +147,8 @@ public class IsometricMap extends JPanel implements MouseListener, MouseMotionLi
                 squareToPaintAvatarOn.paintAvatarOnMap(g, i, k, avatar, this);
                 moveAvatar ();
 
-           	}
+            //Paint.me.walking(lineCliqued,rowCliqued);
+        }
 
         public int getZoomLevel () {
         	return zoomLevel;
@@ -226,7 +225,7 @@ public class IsometricMap extends JPanel implements MouseListener, MouseMotionLi
             		isMovingRowbyRow = false;
             	}
             }
-        	
+
         	
         }
         
@@ -247,15 +246,18 @@ public class IsometricMap extends JPanel implements MouseListener, MouseMotionLi
         }
         
         public boolean getCliqued (){
-        	return cliqued;
+        	return doneSend;
         }
         
-        
+        public void switchDoneSend(){
+            doneSend = false;
+        }
 		public void mousePressed(MouseEvent e) {
 			pCliqued = e.getPoint();
 			cliqued = true;
 			isMovingLinebyLine = true;
 			isMovingRowbyRow = true;
+
 		}
 
 		public void mouseMoved(MouseEvent e) {

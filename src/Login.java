@@ -238,9 +238,9 @@ public class Login extends JFrame {
 			
 			if (temp == logIn ) {
 				UserID currentUser = getUserID(username.getText());
-                System.out.println(username.getText());
+                //System.out.println(username.getText());
                 String usernameFromField = username.getText();
-                System.out.println(password.getText());
+                //System.out.println(password.getText());
                 String passwordFromField = password.getText();
 				if (!"".equals(username.getText())){
 
@@ -248,14 +248,13 @@ public class Login extends JFrame {
                         //if(currentUser.getPassword().equals(password.getText())){
                         Icetizen me  = new Icetizen();
                         me.setUsername(usernameFromField);
-
-                            me.setIcePortID(252);
-                            me.setListeningPort(10777);
+                        me.setIcePortID(252);
+                        me.setListeningPort(10777);
 
 
                         ICEWorldImmigration immigration = new ICEWorldImmigration(me);
                         boolean loginSuccess = immigration.login(passwordFromField);
-                        System.out.println(loginSuccess);
+                        //System.out.println(loginSuccess);
                         if(loginSuccess){
                             me.setPassword(passwordFromField);
 
@@ -263,16 +262,12 @@ public class Login extends JFrame {
                             loggedinUser.setPassword(passwordFromField);
                             info.setForeground(Color.BLACK);
                             info.setText("Logged-in as ICE-TIZEN");
-//                            immigration.walk(10,90);
-//                            immigration.walk(90,10);
-//                            currentUser.setNumberTries(0);
-//                            users.add(currentUser);
+
                             setVisible(false);
-                            Paint mainFrame = new Paint();
+                            Paint mainFrame = new Paint(loggedinUser);
                             mainFrame.setVisible(true);
                             mainFrame.setSize(new Dimension(1280, 720));
                             mainFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-                            mainFrame.setLoggedinUser(loggedinUser);
 
 
 

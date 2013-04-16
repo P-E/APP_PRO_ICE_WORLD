@@ -12,9 +12,9 @@ public class mainMap{
     public static LoggedinUser me = new LoggedinUser();
     public static void main(String[] args){
         me.loggedin();
-        Paint paint = new Paint();
-        paint.setVisible(true);
-        paint.setSize(1000,500);
+//        Paint paint = new Paint();
+//        paint.setVisible(true);
+//        paint.setSize(1000,500);
 
 
     }
