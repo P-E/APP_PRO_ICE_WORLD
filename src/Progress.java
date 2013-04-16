@@ -8,7 +8,7 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
+//import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;

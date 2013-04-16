@@ -9,12 +9,19 @@ import java.awt.*;
  * To change this template use File | Settings | File Templates.
  */
 public class mainMap extends JFrame{
+    public static LoggedinUser me = new LoggedinUser();
     public static void main(String[] args){
         Paint paint = new Paint();
-        JFrame mainFrame = new JFrame();
-        mainFrame.getContentPane().add(paint);
+        paint.setVisible(true);
+        me.loggedin();
+    }
 
-        mainFrame.setVisible(true);
-        mainFrame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+
+    public void setLoggedinUser(LoggedinUser loggedinUser) {
+        me = loggedinUser;
+    }
+
+    public LoggedinUser getLoggedinUser(){
+        return me;
     }
 }

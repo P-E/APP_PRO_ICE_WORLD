@@ -246,23 +246,21 @@ public class Login extends JFrame {
 
 					if (currentUser.getNumberTries()!=3) {
                         //if(currentUser.getPassword().equals(password.getText())){
-
-                            Icetizen me  = new Icetizen();
-                            me.setUsername(usernameFromField);
+                        Icetizen me  = new Icetizen();
+                        me.setUsername(usernameFromField);
 
                             me.setIcePortID(252);
                             me.setListeningPort(10777);
-                            IcetizenLook look = new IcetizenLook();
-                            look.gidB = "B001";
-                            look.gidS = "S001";
-                            look.gidH = "H001";
-                            look.gidW = "W001";
-                            me.setIcetizenLook(look);
+
 
                         ICEWorldImmigration immigration = new ICEWorldImmigration(me);
                         boolean loginSuccess = immigration.login(passwordFromField);
                         System.out.println(loginSuccess);
                         if(loginSuccess){
+                            me.setPassword(passwordFromField);
+                            LoggedinUser loggedinUser = new LoggedinUser();
+                            loggedinUser.setUsername(usernameFromField);
+                            loggedinUser.setPassword(passwordFromField);
                             info.setForeground(Color.BLACK);
                             info.setText("Logged-in as ICE-TIZEN");
 //                            immigration.walk(10,90);
@@ -270,10 +268,11 @@ public class Login extends JFrame {
 //                            currentUser.setNumberTries(0);
 //                            users.add(currentUser);
                             setVisible(false);
-                            Paint mainFrame = new Paint();
+                            mainMap mainFrame = new mainMap();
                             mainFrame.setVisible(true);
-                            mainFrame.setSize(new Dimension(1280,720));
+                            mainFrame.setSize(new Dimension(1280, 720));
                             mainFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+                            mainFrame.setLoggedinUser(loggedinUser);
 
 
 
