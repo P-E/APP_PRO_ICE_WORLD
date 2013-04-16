@@ -18,22 +18,17 @@ import javax.swing.JPanel;
 
 public class MiniMap extends JPanel {
 Image icone;
-JFrame frame;
+Image minimap;
 
 	public MiniMap(){
-		
+		minimap = getToolkit().getImage("images/minimap.jpg" );
 		icone = getToolkit().getImage("images/icone.jpg" );
 	}
     public void paintMiniMap(Graphics g, int x, int y) {
-    		g.setColor(Color.BLACK);
-    		g.fillRect(10,40,240,240);
-    		g.setColor(new Color (185,122,87));
-    		g.fillRect(15,45,230,230);
-    		g.setColor(new Color(0,162,232));
-        	g.fillRect(20,50,220,220);
+    		g.drawImage(minimap,13,42,this);
         	
         	 
-        	g.drawImage(icone,2*x+30-9,2*y+60-9,frame);
+        	g.drawImage(icone,2*x+30-9,2*y+60-9,this);
         	
                 
             

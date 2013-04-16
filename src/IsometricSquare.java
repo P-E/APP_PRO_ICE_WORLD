@@ -55,13 +55,13 @@ public class IsometricSquare {
                     g.fillPolygon(poly);
                 }
                 
-                else if ((line-row)%2 ==0) {
-                	g.setColor(new Color (0,128,0));
+                else if (line%2 ==0) {
+                	g.setColor(new Color (0,64,128));
                     g.fillPolygon(poly);
                 }
                 
                 else {
-                	g.setColor(new Color (67,128,38));
+                	g.setColor(new Color (52,90,133));
                     g.fillPolygon(poly);
                 }
                 

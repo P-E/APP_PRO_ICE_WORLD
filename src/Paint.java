@@ -1,7 +1,6 @@
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
+
 
 import javax.swing.*;
 
@@ -14,6 +13,7 @@ public class Paint extends JFrame {
 	private int TALK_VISIBLE_DURATION = 5000;
 	private Image image;
 	private Graphics buffer;
+	private IsoBackground isoBackground;
 	private Weather weather;
 	private Talking talking;
 	private Yelling yelling;
@@ -21,15 +21,16 @@ public class Paint extends JFrame {
 	private MiniMap miniMap;
 	
 	
+	
 	public static void main (String [] args){
 		Paint paint = new Paint ();
 		paint.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		paint.setVisible(true);
-		
 	}
 	
 	public Paint () {
-
+		
+		isoBackground = new IsoBackground ();
 		miniMap = new MiniMap ();
 		isometricMap = new IsometricMap ();
 		weather = new Weather ();
@@ -39,27 +40,31 @@ public class Paint extends JFrame {
 		addMouseListener(isometricMap);
 		addMouseMotionListener(isometricMap);
 		addMouseWheelListener(isometricMap);
-		setBackground(new Color(0,162,232));
+		//setBackground(new Color(0,162,232));
 		changeCursor("sword.gif");
 		new Animator ();
+		this.pack();
+		this.setSize(780, 520);
 		//new Music ("music.wav");
 
 	}
 	
-	public void paint (Graphics g) {
-		
+	
+	public void  paint(Graphics g) {
 		image= createImage(getSize().width,getSize().height);
 		buffer=image.getGraphics();
+		isoBackground.paintIsoBackground(buffer);
 		isometricMap.paintMap(buffer,getWidth(),getHeight());
 		buffer.setColor(Color.WHITE);
 		weather.paintWeather(buffer);
 		yelling.paintYelling(buffer);
+		miniMap.paintMiniMap (buffer,isometricMap.getRowAvatar(),isometricMap.getLineAvatar());
 		g.drawImage(image,0,0,this);
-		
     
-        miniMap.paintMiniMap (g,isometricMap.getRowAvatar(),isometricMap.getLineAvatar());
+       
 		
 	}
+	
 	
 	public void changeCursor (String cursorFile) {
 		  Toolkit toolkit = Toolkit.getDefaultToolkit();
