@@ -129,7 +129,8 @@ public class IsometricMap extends JPanel implements MouseListener, MouseMotionLi
                					if (square.contains(pCliqued)) {
                    					lineCliqued = square.getLine();
                    					rowCliqued = square.getRow();
-                                    mainMap.me.immigration.walk(lineCliqued,rowCliqued);
+                                    //Paint.me.walking(lineCliqued,rowCliqued);
+                                    System.out.println("Walking");
                    					cliqued = false;
                    				}
                				}
@@ -144,11 +145,13 @@ public class IsometricMap extends JPanel implements MouseListener, MouseMotionLi
                			}
                			
                			square.paintSquare(g);
+
                 	}
                 }
-                
+
                 squareToPaintAvatarOn.paintAvatarOnMap(g, i, k, avatar, this);
                 moveAvatar ();
+
            	}
 
         public int getZoomLevel () {

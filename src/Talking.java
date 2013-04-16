@@ -24,7 +24,7 @@ public Talking (String message,int TALK_VISIBLE_DURATION) {
 	CHAR_WIDTH = 30;
 	CHAR_HEIGHT = 30;
 	lengthBubble= 100;
-    mainMap.me.immigration.talk(message);
+    Paint.me.talking(message);
 
 
 	

@@ -8,12 +8,15 @@ import java.awt.*;
  * Time: 14:06 น.
  * To change this template use File | Settings | File Templates.
  */
-public class mainMap extends JFrame{
+public class mainMap{
     public static LoggedinUser me = new LoggedinUser();
     public static void main(String[] args){
+        me.loggedin();
         Paint paint = new Paint();
         paint.setVisible(true);
-        me.loggedin();
+        paint.setSize(1000,500);
+
+
     }
 
 

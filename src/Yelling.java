@@ -18,7 +18,7 @@ private boolean display;
 public Yelling (String message) {
 	this.message = message ;
 	display = true;
-    mainMap.me.immigration.yell(message);
+    Paint.me.yelling(message);
 
 	
 	(new DisplayBubble ()).start();

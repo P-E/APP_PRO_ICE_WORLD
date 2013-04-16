@@ -22,21 +22,8 @@ public class Paint extends JFrame {
 	private Yelling yelling;
 	private IsometricMap isometricMap;
 	private MiniMap miniMap;
-	
-//	public void setUser(Icetizen setUser){
-//        user = setUser;
-//        user.setIcePortID(252);
-//        user.setListeningPort(10777);
-//        IcetizenLook look = new IcetizenLook();
-//        look.gidB = "B001";
-//        look.gidS = "S001";
-//        look.gidH = "H001";
-//        look.gidW = "W001";
-//        user.setIcetizenLook(look);
-//        ICEWorldImmigration immigration = new ICEWorldImmigration(user);
-//        immigration.login(user.getPassword());
-//
-//    }
+    public static LoggedinUser me = new LoggedinUser();
+
 
 
 
@@ -47,9 +34,18 @@ public class Paint extends JFrame {
 		paint.setVisible(true);
 
 	}
-	
-	public Paint () {
+    public void setLoggedinUser(LoggedinUser loggedinUser) {
+        me = loggedinUser;
+    }
 
+    public LoggedinUser getLoggedinUser(){
+        return me;
+    }
+	public Paint () {
+        me.loggedin();
+        this.setSize(1280, 720);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setVisible(true);
 		isoBackground = new IsoBackground ();
 		miniMap = new MiniMap ();
 		isometricMap = new IsometricMap ();
@@ -64,7 +60,7 @@ public class Paint extends JFrame {
 		changeCursor("sword.gif");
 		new Animator ();
 		this.pack();
-		this.setSize(1280, 720);
+
 		//new Music ("music.wav");
 
 	}

@@ -12,7 +12,7 @@ public class Login extends JFrame {
 	
 	private int x = Toolkit.getDefaultToolkit().getScreenSize().width;
 	private int y = Toolkit.getDefaultToolkit().getScreenSize().height;
-	
+    public LoggedinUser loggedinUser = new LoggedinUser();
 	
 	private JPanel mainPanel;
 	private ExitDialog exit;
@@ -258,7 +258,7 @@ public class Login extends JFrame {
                         System.out.println(loginSuccess);
                         if(loginSuccess){
                             me.setPassword(passwordFromField);
-                            LoggedinUser loggedinUser = new LoggedinUser();
+
                             loggedinUser.setUsername(usernameFromField);
                             loggedinUser.setPassword(passwordFromField);
                             info.setForeground(Color.BLACK);
@@ -268,7 +268,7 @@ public class Login extends JFrame {
 //                            currentUser.setNumberTries(0);
 //                            users.add(currentUser);
                             setVisible(false);
-                            mainMap mainFrame = new mainMap();
+                            Paint mainFrame = new Paint();
                             mainFrame.setVisible(true);
                             mainFrame.setSize(new Dimension(1280, 720));
                             mainFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);

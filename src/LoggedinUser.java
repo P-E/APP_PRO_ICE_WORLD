@@ -52,4 +52,10 @@ public class LoggedinUser {
     public void walking(int x,int y){
         immigration.walk(x,y);
     }
+    public void talking(String msg){
+        immigration.talk(msg);
+    }
+    public void yelling(String msg){
+        immigration.yell(msg);
+    }
 }
