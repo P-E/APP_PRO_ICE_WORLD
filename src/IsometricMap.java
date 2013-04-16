@@ -32,11 +32,9 @@ public class IsometricMap extends JPanel implements MouseListener, MouseMotionLi
 	private boolean cliqued, isMovingLinebyLine, isMovingRowbyRow;
 	private Point middlePoint, origin, squareCliquedPoint;
 
-
   
 
-        public IsometricMap() {
-        	       	
+        public IsometricMap() {    	
         	middlePoint = new Point (MAX_X/2, MAX_Y/2);
         	cliqued = false;
         	middleSquareLine = 50;
@@ -129,7 +127,6 @@ public class IsometricMap extends JPanel implements MouseListener, MouseMotionLi
                					if (square.contains(pCliqued)) {
                    					lineCliqued = square.getLine();
                    					rowCliqued = square.getRow();
-                                    //Paint.me.walking(lineCliqued,rowCliqued);
                                     System.out.println("Walking");
                    					cliqued = false;
                    				}
@@ -240,6 +237,19 @@ public class IsometricMap extends JPanel implements MouseListener, MouseMotionLi
         public int getRowAvatar () {
         	return rowAvatar;
         }
+        
+        public int getLineCliqued () {
+        	return lineCliqued;
+        }
+        
+        public int getRowCliqued () {
+        	return rowCliqued;
+        }
+        
+        public boolean getCliqued (){
+        	return cliqued;
+        }
+        
         
 		public void mousePressed(MouseEvent e) {
 			pCliqued = e.getPoint();

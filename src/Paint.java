@@ -18,22 +18,22 @@ public class Paint extends JFrame {
 	private Graphics buffer;
 	private IsoBackground isoBackground;
 	private Weather weather;
-	private Talking talking;
-	private Yelling yelling;
+	//private Talking talking;
+	//private Yelling yelling;
 	private IsometricMap isometricMap;
 	private MiniMap miniMap;
-    public static LoggedinUser me = new LoggedinUser();
+    public LoggedinUser me = new LoggedinUser();
 
 
 
 
 
-	public static void main (String [] args){
+	/*public static void main (String [] args){
 		Paint paint = new Paint ();
 		paint.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		paint.setVisible(true);
 
-	}
+	}*/
     public void setLoggedinUser(LoggedinUser loggedinUser) {
         me = loggedinUser;
     }
@@ -50,9 +50,8 @@ public class Paint extends JFrame {
 		miniMap = new MiniMap ();
 		isometricMap = new IsometricMap ();
 		weather = new Weather ();
-		talking = new Talking ("prout prout prout", TALK_VISIBLE_DURATION);
-		yelling = new Yelling ("WHAT THE FUCK");
-		isometricMap = new IsometricMap();
+		//talking = new Talking ("prout prout prout", TALK_VISIBLE_DURATION);
+		//yelling = new Yelling ("WHAT THE FUCK");
 		addMouseListener(isometricMap);
 		addMouseMotionListener(isometricMap);
 		addMouseWheelListener(isometricMap);
@@ -73,12 +72,18 @@ public class Paint extends JFrame {
 		isometricMap.paintMap(buffer,getWidth(),getHeight());
 		buffer.setColor(Color.WHITE);
 		weather.paintWeather(buffer);
-		yelling.paintYelling(buffer);
+		//yelling.paintYelling(buffer);
 		miniMap.paintMiniMap (buffer,isometricMap.getRowAvatar(),isometricMap.getLineAvatar());
 		g.drawImage(image,0,0,this);
-    
+		sendDataToServer ();
        
 		
+	}
+	
+	public void sendDataToServer () {
+		if (isometricMap.getCliqued()){
+			me.walking(isometricMap.getLineCliqued(), isometricMap.getRowCliqued());
+		}
 	}
 	
 	
