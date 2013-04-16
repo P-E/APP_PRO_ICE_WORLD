@@ -1,15 +1,19 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 
-import javax.swing.JPanel;
 
 
-public class IsometricSquare {
+public class IsometricSquare{
 
 	private int MAX_X = Toolkit.getDefaultToolkit().getScreenSize().width;
 	private int MAX_Y = Toolkit.getDefaultToolkit().getScreenSize().height;
@@ -17,6 +21,7 @@ public class IsometricSquare {
 	private int nextCenterX, nextCenterY, zoomLevel;
 	private Point origin;
 	private Polygon poly;
+	//private Avatar avatar;
 	private boolean highlighted, cliqued, isAvatarOn;
 	
 	public IsometricSquare (int line, int row, int nextCenterX, int nextCenterY, int zoomLevel) {
@@ -70,11 +75,16 @@ public class IsometricSquare {
         		
             }
     
-    public void paintAvatarOnMap (Graphics g, int i, int k) {
+    public void paintAvatarOnMap (Graphics g, int i, int k, Image avatar, ImageObserver obs) {
+    	
     	int x = poly.xpoints[0] + (int)(((double)i)*(((double)width)/((double)height)));
 		int y = poly.ypoints[1] + k;
-		g.setColor(Color.BLACK);
-		g.fillOval(x-(5/2)*zoomLevel, y-5*zoomLevel, 5*zoomLevel,5*zoomLevel);
+		int charWidth =avatar.getWidth(obs)/(30-3*(zoomLevel-1));
+		int charHeight =avatar.getWidth(obs)/(30-3*(zoomLevel-1));		
+		
+		BufferedImage resizedImage = new BufferedImage(charWidth,charHeight, BufferedImage.TYPE_INT_RGB );
+		Graphics2D g2 = resizedImage.createGraphics();
+		g.drawImage(avatar, x-charWidth/2, y-charHeight, charWidth , charWidth , null);
     }
     
     public int getLine () {

@@ -18,7 +18,7 @@ import javax.swing.*;
 
 
 
-public class IsometricMap implements MouseListener, MouseMotionListener, MouseWheelListener {
+public class IsometricMap extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener {
 	
 	private int MAX_X = Toolkit.getDefaultToolkit().getScreenSize().width;
 	private int MAX_Y = Toolkit.getDefaultToolkit().getScreenSize().height;
@@ -28,6 +28,7 @@ public class IsometricMap implements MouseListener, MouseMotionListener, MouseWh
 	private int i,k,l;
 	private int width, height;
 	private int zoomLevel;
+	private Image avatar;
 	private boolean cliqued, isMovingLinebyLine, isMovingRowbyRow;
 	private Point middlePoint, origin, squareCliquedPoint;
 
@@ -45,7 +46,7 @@ public class IsometricMap implements MouseListener, MouseMotionListener, MouseWh
         	i = 0;
         	k =0;
         	zoomLevel = 1;
-        	
+        	avatar = getToolkit().getImage("images/avatar.png"); 
         }
 
         public void paintMap(Graphics g, int frameSizeX, int frameSizeY) {
@@ -145,7 +146,7 @@ public class IsometricMap implements MouseListener, MouseMotionListener, MouseWh
                 	}
                 }
                 
-                squareToPaintAvatarOn.paintAvatarOnMap(g, i, k);
+                squareToPaintAvatarOn.paintAvatarOnMap(g, i, k, avatar, this);
                 moveAvatar ();
            	}
 
