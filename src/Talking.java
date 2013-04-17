@@ -32,7 +32,7 @@ public class Talking {
             //immig.talk(message);
         }
 
-        public void paintTalking (Graphics g, int charPositionX, int charPositionY) {
+        public void paintTalking (Graphics g, Point pAvatarPosition) {
             if (display){
                 g.setFont(new Font("TimesRoman",Font.CENTER_BASELINE,20));
                 fm=g.getFontMetrics(g.getFont());
@@ -40,14 +40,14 @@ public class Talking {
                 if (lengthMessage>100) {
                     lengthBubble= lengthMessage+20;
                 }
-                bubbleX = charPositionX - lengthBubble/2;
-                bubbleY = charPositionY - 80 ;
+                bubbleX = pAvatarPosition.x - lengthBubble/2;
+                bubbleY = pAvatarPosition.y - 80 ;
 
                 g.setColor(Color.BLACK);
                 g.fillOval(bubbleX+30/2, bubbleY+2,lengthBubble,40 );
-                g.fillPolygon(new int [] {charPositionX+CHAR_WIDTH+2,charPositionX+CHAR_WIDTH+17,charPositionX+CHAR_WIDTH/2+2}, new int []{(charPositionY-50),(charPositionY-50),charPositionY-3*(CHAR_HEIGHT/4)}, 3);
+                g.fillPolygon(new int [] {pAvatarPosition.x+CHAR_WIDTH+2,pAvatarPosition.x+CHAR_WIDTH+17,pAvatarPosition.x+CHAR_WIDTH/2+2}, new int []{(pAvatarPosition.y-50),(pAvatarPosition.y-50),pAvatarPosition.y-3*(CHAR_HEIGHT/4)}, 3);
                 g.setColor(Color.WHITE);
-                g.fillPolygon(new int [] {charPositionX+CHAR_WIDTH,charPositionX+CHAR_WIDTH+15,charPositionX+CHAR_WIDTH/2}, new int []{(charPositionY-50),(charPositionY-50),charPositionY-3*(CHAR_HEIGHT/4)}, 3);
+                g.fillPolygon(new int [] {pAvatarPosition.x+CHAR_WIDTH,pAvatarPosition.x+CHAR_WIDTH+15,pAvatarPosition.x+CHAR_WIDTH/2}, new int []{(pAvatarPosition.y-50),(pAvatarPosition.y-50),pAvatarPosition.y-3*(CHAR_HEIGHT/4)}, 3);
                 g.fillOval(bubbleX+30/2, bubbleY,lengthBubble,40 );
                 g.setColor(Color.BLACK);
                 g.drawString(message, bubbleX+30/2+(lengthBubble-lengthMessage)/2, bubbleY+23);

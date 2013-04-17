@@ -19,9 +19,9 @@ public class IsometricSquare{
 	private int MAX_Y = Toolkit.getDefaultToolkit().getScreenSize().height;
 	private int line, row, width, height;
 	private int nextCenterX, nextCenterY, zoomLevel;
+	int x,y;
 	private Point origin;
 	private Polygon poly;
-	//private Avatar avatar;
 	private boolean highlighted, cliqued, isAvatarOn;
 	
 	public IsometricSquare (int line, int row, int nextCenterX, int nextCenterY, int zoomLevel) {
@@ -77,10 +77,10 @@ public class IsometricSquare{
     
     public void paintAvatarOnMap (Graphics g, int i, int k, Image avatar, ImageObserver obs) {
     	
-    	int x = poly.xpoints[0] + (int)(((double)i)*(((double)width)/((double)height)));
-		int y = poly.ypoints[1] + k;
-		int charWidth =avatar.getWidth(obs)/(30-3*(zoomLevel-1));
-		int charHeight =avatar.getWidth(obs)/(30-3*(zoomLevel-1));		
+    	x = poly.xpoints[0] + (int)(((double)i)*(((double)width)/((double)height)));
+		y = poly.ypoints[1] + k;
+		int charWidth =500/(30-3*(zoomLevel-1));
+		int charHeight =500/(30-3*(zoomLevel-1));		
 		
 		BufferedImage resizedImage = new BufferedImage(charWidth,charHeight, BufferedImage.TYPE_INT_RGB );
 		Graphics2D g2 = resizedImage.createGraphics();
@@ -93,6 +93,10 @@ public class IsometricSquare{
     
     public int getRow () {
     	return row;
+    }
+    
+    public Point getCharPosition () {
+    	return new Point (x,y);
     }
     
     

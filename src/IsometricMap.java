@@ -17,7 +17,7 @@ public class IsometricMap extends JPanel implements MouseListener, MouseMotionLi
 	private int MAX_X = Toolkit.getDefaultToolkit().getScreenSize().width;
 	private int MAX_Y = Toolkit.getDefaultToolkit().getScreenSize().height;
 	private IsometricSquare square, squareToPaintAvatarOn ;
-	private Point pHilight, pCliqued;
+	private Point pHilight, pCliqued, pAvatarPosition;
 	private int lineCliqued, rowCliqued, lineAvatar, rowAvatar,middleSquareLine, middleSquareRow ;
 	private int i,k,l;
 	private int width, height;
@@ -143,15 +143,12 @@ public class IsometricMap extends JPanel implements MouseListener, MouseMotionLi
 
                 	}
                 }
-
-                squareToPaintAvatarOn.paintAvatarOnMap(g, i, k, avatar, this);
+               
+                squareToPaintAvatarOn.paintAvatarOnMap(g, i, k, avatar, this); 
+                pAvatarPosition = squareToPaintAvatarOn.getCharPosition();
                 moveAvatar ();
 
             //Paint.me.walking(lineCliqued,rowCliqued);
-        }
-
-        public int getZoomLevel () {
-        	return zoomLevel;
         }
         
         public void moveAvatar (){
@@ -229,6 +226,11 @@ public class IsometricMap extends JPanel implements MouseListener, MouseMotionLi
         	
         }
         
+
+        public int getZoomLevel () {
+        	return zoomLevel;
+        }
+        
         public int getLineAvatar () {
         	return lineAvatar;
         }
@@ -247,6 +249,10 @@ public class IsometricMap extends JPanel implements MouseListener, MouseMotionLi
         
         public boolean getCliqued (){
         	return doneSend;
+        }
+        
+        public Point getCharPosition () {
+        	return pAvatarPosition ;
         }
         
         public void switchDoneSend(){

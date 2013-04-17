@@ -73,8 +73,8 @@ public class Paint extends JFrame {
 
 
         weather = new Weather ();
-		talking = new Talking ("", TALK_VISIBLE_DURATION);
-		yelling = new Yelling ("");
+		talking = new Talking ("lalala", 70000);
+		yelling = new Yelling ("THE HELL ???");
 		addMouseListener(isometricMap);
 		addMouseMotionListener(isometricMap);
 		addMouseWheelListener(isometricMap);
@@ -98,9 +98,10 @@ public class Paint extends JFrame {
 		buffer=image.getGraphics();
 		isoBackground.paintIsoBackground(buffer);
 		isometricMap.paintMap(buffer,getWidth(),getHeight());
+		talking.paintTalking(buffer, isometricMap.getCharPosition());
 		buffer.setColor(Color.WHITE);
 		weather.paintWeather(buffer);
-//		yelling.paintYelling(buffer);
+		yelling.paintYelling(buffer);
 		miniMap.paintMiniMap (buffer,isometricMap.getRowAvatar(),isometricMap.getLineAvatar());
 		g.drawImage(image,0,0,this);
         recieveMassage();

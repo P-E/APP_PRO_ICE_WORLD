@@ -32,7 +32,6 @@ public class Yelling {
             lengthMessage = fm.stringWidth(message);
             g.setColor(Color.BLACK);
             g.drawString(message, (MAX_X - lengthMessage)/2, MAX_Y/3);
-            System.out.println(message);
         }
     }
 
