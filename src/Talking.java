@@ -12,7 +12,7 @@ public class Talking {
     private FontMetrics fm;
     private int lengthBubble, bubbleX,bubbleY,lengthMessage;
     private int CHAR_WIDTH, CHAR_HEIGHT ;
-    private boolean display;
+    private boolean display = false;
     Icetizen ice = new Icetizen ();
     ICEWorldImmigration immig = new ICEWorldImmigration (ice);
 
@@ -20,7 +20,9 @@ public class Talking {
         public Talking (String message,int TALK_VISIBLE_DURATION) {
             this.message = message ;
             this.TALK_VISIBLE_DURATION = TALK_VISIBLE_DURATION;
-            display = true;
+            if (message!=""){
+                display = true;
+            }
             CHAR_WIDTH = 30;
             CHAR_HEIGHT = 30;
             lengthBubble= 100;
@@ -72,6 +74,7 @@ public class Talking {
         public void run (){
             try {
                 sleep (TALK_VISIBLE_DURATION);
+                display = false;
             } catch (InterruptedException e) {}
 
         }

@@ -1,8 +1,5 @@
-
-import iceworld.given.ICEWorldImmigration;
-import iceworld.given.IcetizenLook;
-
 import java.awt.*;
+import java.io.IOException;
 
 
 import javax.swing.*;
@@ -13,7 +10,7 @@ public class Paint extends JFrame {
     //public int currentLine, currentRow;
 	private int MAX_X = Toolkit.getDefaultToolkit().getScreenSize().width;
 	private int MAX_Y = Toolkit.getDefaultToolkit().getScreenSize().height;
-	private int TALK_VISIBLE_DURATION = 5000;
+	private int TALK_VISIBLE_DURATION = 2000;
 	private Image image;
 	private Graphics buffer;
 	private IsoBackground isoBackground;
@@ -22,9 +19,12 @@ public class Paint extends JFrame {
 	private Yelling yelling;
 	private IsometricMap isometricMap;
 	private MiniMap miniMap;
+    private FetchStateTest stateTest;
     public static LoggedinUser me = new LoggedinUser();
     private String talkMsg, yellMsg;
     public static Messenger mymessenger = new Messenger();
+    public static Object weatherState,weatherOldState;
+    private int countTime=0;
 
     public void setLoggedinUser(LoggedinUser loggedinUser) {
         me = loggedinUser;
@@ -32,7 +32,7 @@ public class Paint extends JFrame {
     }
 
 
-	public Paint (LoggedinUser loggedinUser) {
+	public Paint (LoggedinUser loggedinUser) throws IOException {
         this.setLayout(new BorderLayout());
         setLoggedinUser(loggedinUser);
 
@@ -72,9 +72,10 @@ public class Paint extends JFrame {
 //        this.add(talkPanel,BorderLayout.SOUTH);
 
 
-        weather = new Weather ();
-		talking = new Talking ("lalala", 70000);
-		yelling = new Yelling ("THE HELL ???");
+        weather = new Weather (weatherState);
+		talking = new Talking ("", TALK_VISIBLE_DURATION);
+		yelling = new Yelling ("");
+
 		addMouseListener(isometricMap);
 		addMouseMotionListener(isometricMap);
 		addMouseWheelListener(isometricMap);
@@ -83,7 +84,7 @@ public class Paint extends JFrame {
 		new Animator ();
 		this.pack();
         me.loggedin();
-
+        stateTest = new FetchStateTest();
 
 		//new Music ("music.wav");
 
@@ -93,8 +94,22 @@ public class Paint extends JFrame {
         me.immigration.logout();
         System.exit(0);
     }
-	public void  paint(Graphics g) {
-		image= createImage(getSize().width,getSize().height);
+
+
+    public void  paint(Graphics g){
+
+        //System.out.println(weatherState);
+        try {
+
+            stateTest = new FetchStateTest();
+
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+
+
+        image= createImage(getSize().width,getSize().height);
 		buffer=image.getGraphics();
 		isoBackground.paintIsoBackground(buffer);
 		isometricMap.paintMap(buffer,getWidth(),getHeight());
@@ -104,13 +119,20 @@ public class Paint extends JFrame {
 		yelling.paintYelling(buffer);
 		miniMap.paintMiniMap (buffer,isometricMap.getRowAvatar(),isometricMap.getLineAvatar());
 		g.drawImage(image,0,0,this);
-        recieveMassage();
-		sendDataToServer ();
+
+        try {
+            recieveMassage();
+        } catch (IOException e) {
+        }
+        sendDataToServer ();
+
        
 		
 	}
 
-    private void recieveMassage() {
+
+
+    private void recieveMassage() throws IOException {
         if(mymessenger.isTalkSend){
             talking = new Talking(mymessenger.getTalkMsg(),TALK_VISIBLE_DURATION);
             mymessenger.setTalkMsg("");
@@ -120,6 +142,16 @@ public class Paint extends JFrame {
             yelling = new Yelling(mymessenger.getYellMsg());
             mymessenger.setYellMsg("");
             mymessenger.switchYellSend();
+        }
+        if(stateTest.getWeather()){
+
+            weatherState = stateTest.getWeatherCondition();
+            weather = new Weather(weatherState);
+            mymessenger.switchWeatherSend();
+            stateTest.switchDoneSend();
+
+//            System.out.println("Weather Change");
+//            System.out.println(stateTest.getWeather());
         }
     }
 
@@ -146,6 +178,7 @@ public class Paint extends JFrame {
             yelling.switchDoneSend();
         }
 
+
 	}
 	
 	
@@ -158,16 +191,17 @@ public class Paint extends JFrame {
 	
 	class Animator implements Runnable {
 		private Thread thread;
-
 		public Animator () {
 			thread = new Thread (this);
 			thread.start();
+
 		}
 		
 		public void run () {
+
 			while (true) {
 			try {
-				thread.sleep(10);
+				thread.sleep(500);
 			}catch (InterruptedException e) {}
 			
 			repaint ();

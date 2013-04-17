@@ -17,8 +17,8 @@ public class Weather {
 
 		
 		
-		public Weather () {
-			weather = "cloud";
+		public Weather (Object weatherFetch) {
+			weather = (String)weatherFetch;
 			generateClouds();
 			generateRain();
 			generateSnow();
@@ -90,7 +90,7 @@ public class Weather {
 		}
 
 		public void paintWeather (Graphics buffer) {
-			if ("sun".equals(weather)){
+			if ("Sunny".equals(weather)){
 				
 				for (Cloud c : clouds){
 					if (c.getX()<MAX_X && c.getX()>-700){
@@ -101,7 +101,7 @@ public class Weather {
 				}
 			}
 			
-			else if ("cloud".equals(weather)){
+			else if ("Cloudy".equals(weather)){
 				
 				for (Cloud c : clouds){
 					c.move();
@@ -109,7 +109,7 @@ public class Weather {
 				}
 			}
 			
-			else if ("rain".equals(weather)){
+			else if ("Raining".equals(weather)){
 				for (PieceOfWeather f : rainDrops){
 					f.move();
 					buffer.drawLine(f.getX(), f.getY(), f.getX(),f.getY() +10);	
@@ -120,7 +120,7 @@ public class Weather {
 				}
 			}
 			
-			else if ("snow".equals(weather)) {
+			else if ("Snowing".equals(weather)) {
 				for (PieceOfWeather f : snowFlocons){
 					f.move();
 					buffer.fillOval(f.getX(),f.getY(), f.getSizeFlocon(), f.getSizeFlocon());	
@@ -143,7 +143,11 @@ public class Weather {
 			public void run () {
 				while (true){
 					try {
-						thread.sleep(5000);
+						String weatherNew = (String) Paint.weatherState;
+                        if(weather!=weatherNew){
+                            weather = weatherNew;
+                            thread.sleep(0);
+                        }
 					}catch (InterruptedException e){}
 					
 					if ("sun".equals(weather)) {

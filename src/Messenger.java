@@ -7,8 +7,10 @@
  */
 public class Messenger {
     String talkMsg, yellMsg;
+    Object weatherState;
     boolean isTalkSend = false;
     boolean isYellSend = false;
+    boolean isWeatherSend = false;
     public String getTalkMsg(){
         return talkMsg;
     }
@@ -31,5 +33,9 @@ public class Messenger {
 
     public void switchYellSend(){
         isYellSend = false;
+    }
+
+    public void switchWeatherSend(){
+        isWeatherSend = false;
     }
 }

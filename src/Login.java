@@ -2,6 +2,7 @@ import iceworld.given.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.util.LinkedList;
 
 import javax.swing.*;
@@ -264,7 +265,12 @@ public class Login extends JFrame {
                             info.setText("Logged-in as ICE-TIZEN");
 
                             setVisible(false);
-                            Paint mainFrame = new Paint(loggedinUser);
+                            Paint mainFrame = null;
+                            try {
+                                mainFrame = new Paint(loggedinUser);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                            }
                             mainFrame.setVisible(true);
                             mainFrame.setSize(new Dimension(1280, 720));
                             mainFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
