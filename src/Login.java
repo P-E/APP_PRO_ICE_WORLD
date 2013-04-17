@@ -267,11 +267,9 @@ public class Login extends JFrame {
 
                             setVisible(false);
                             Paint mainFrame = null;
-                            try {
+
                                 mainFrame = new Paint(loggedinUser);
-                            } catch (IOException e1) {
-                                e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                            }
+
                             mainFrame.setVisible(true);
                             mainFrame.setSize(new Dimension(1280, 720));
                             mainFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -317,11 +315,9 @@ public class Login extends JFrame {
                 setVisible(false);
                 Paint mainFrame = null;
                 loggedinUser.setUsername("Alien");
-                try {
+
                     mainFrame = new Paint(loggedinUser);
-                } catch (IOException e1) {
-                    //e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                }
+
                 mainFrame.setVisible(true);
                 mainFrame.setSize(new Dimension(1280, 720));
                 mainFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);

@@ -1,5 +1,7 @@
+import iceworld.given.ICEWorldImmigration;
+import iceworld.given.IcetizenLook;
+
 import java.awt.*;
-import java.io.IOException;
 
 
 import javax.swing.*;
@@ -8,23 +10,20 @@ import javax.swing.*;
 
 public class Paint extends JFrame {
     //public int currentLine, currentRow;
-	private int MAX_X = Toolkit.getDefaultToolkit().getScreenSize().width;
-	private int MAX_Y = Toolkit.getDefaultToolkit().getScreenSize().height;
-	private int TALK_VISIBLE_DURATION = 2000;
-	private Image image;
-	private Graphics buffer;
-	private IsoBackground isoBackground;
-	private Weather weather;
-	private Talking talking;
-	private Yelling yelling;
-	private IsometricMap isometricMap;
-	private MiniMap miniMap;
-    private FetchStateTest stateTest;
+    private int MAX_X = Toolkit.getDefaultToolkit().getScreenSize().width;
+    private int MAX_Y = Toolkit.getDefaultToolkit().getScreenSize().height;
+    private int TALK_VISIBLE_DURATION = 5000;
+    private Image image;
+    private Graphics buffer;
+    private IsoBackground isoBackground;
+    private Weather weather;
+    private Talking talking;
+    private Yelling yelling;
+    private IsometricMap isometricMap;
+    private MiniMap miniMap;
     public static LoggedinUser me = new LoggedinUser();
     private String talkMsg, yellMsg;
     public static Messenger mymessenger = new Messenger();
-    public static Object weatherState,weatherOldState;
-    private int countTime=0;
 
     public void setLoggedinUser(LoggedinUser loggedinUser) {
         me = loggedinUser;
@@ -32,7 +31,7 @@ public class Paint extends JFrame {
     }
 
 
-	public Paint (LoggedinUser loggedinUser) throws IOException {
+    public Paint (LoggedinUser loggedinUser) {
         this.setLayout(new BorderLayout());
         setLoggedinUser(loggedinUser);
 
@@ -40,9 +39,9 @@ public class Paint extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
 
-		isoBackground = new IsoBackground ();
-		miniMap = new MiniMap ();
-		isometricMap = new IsometricMap ();
+        isoBackground = new IsoBackground ();
+        miniMap = new MiniMap ();
+        isometricMap = new IsometricMap ();
 
         TalkingWindow talkingWindow = new TalkingWindow();
         talkingWindow.setSize(600,110);
@@ -72,68 +71,46 @@ public class Paint extends JFrame {
 //        this.add(talkPanel,BorderLayout.SOUTH);
 
 
-        //weather = new Weather (weatherState);
-		talking = new Talking ("", TALK_VISIBLE_DURATION);
-		yelling = new Yelling ("");
-
-		addMouseListener(isometricMap);
-		addMouseMotionListener(isometricMap);
-		addMouseWheelListener(isometricMap);
-		addKeyListener(isometricMap);
-		//setBackground(new Color(0,162,232));
-		//changeCursor("sword.gif");
-		new Animator ();
-		this.pack();
+        weather = new Weather ();
+        talking = new Talking ("", 70000);
+        yelling = new Yelling ("");
+        addMouseListener(isometricMap);
+        addMouseMotionListener(isometricMap);
+        addMouseWheelListener(isometricMap);
+        addKeyListener(isometricMap);
+        //setBackground(new Color(0,162,232));
+        changeCursor("sword.gif");
+        new Animator ();
+        this.pack();
         me.loggedin();
-        stateTest = new FetchStateTest();
-        weather = new Weather(weatherState);
-		//new Music ("music.wav");
 
-	}
-	
-	public static void logout(){
+
+        //new Music ("music.wav");
+
+    }
+
+    public static void logout(){
         me.immigration.logout();
         System.exit(0);
     }
-
-
-    public void  paint(Graphics g){
-
-        //System.out.println(weatherState);
-        try {
-
-            stateTest = new FetchStateTest();
-            weather = new Weather(weatherState);
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-
-
-
+    public void  paint(Graphics g) {
         image= createImage(getSize().width,getSize().height);
-		buffer=image.getGraphics();
-		isoBackground.paintIsoBackground(buffer);
-		isometricMap.paintMap(buffer,getWidth(),getHeight());
-		talking.paintTalking(buffer, isometricMap.getCharPosition(),isometricMap.getZoomLevel());
-		buffer.setColor(Color.WHITE);
-		weather.paintWeather(buffer);
-		yelling.paintYelling(buffer);
-		miniMap.paintMiniMap (buffer,isometricMap.getRowAvatar(),isometricMap.getLineAvatar());
-		g.drawImage(image,0,0,this);
-
-        try {
-            recieveMassage();
-        } catch (IOException e) {
-        }
+        buffer=image.getGraphics();
+        isoBackground.paintIsoBackground(buffer);
+        isometricMap.paintMap(buffer,getWidth(),getHeight());
+        talking.paintTalking(buffer, isometricMap.getCharPosition(),isometricMap.getZoomLevel());
+        buffer.setColor(Color.WHITE);
+        weather.paintWeather(buffer);
+        yelling.paintYelling(buffer);
+        miniMap.paintMiniMap (buffer,isometricMap.getRowAvatar(),isometricMap.getLineAvatar());
+        g.drawImage(image,0,0,this);
+        recieveMassage();
         sendDataToServer ();
 
-       
-		
-	}
 
+    }
 
-
-    private void recieveMassage() throws IOException {
+    private void recieveMassage() {
         if(mymessenger.isTalkSend){
             talking = new Talking(mymessenger.getTalkMsg(),TALK_VISIBLE_DURATION);
             mymessenger.setTalkMsg("");
@@ -144,26 +121,17 @@ public class Paint extends JFrame {
             mymessenger.setYellMsg("");
             mymessenger.switchYellSend();
         }
-        if(stateTest.getWeather()){
-            weatherState = stateTest.getWeatherCondition();
-            weather = new Weather(weatherState);
-            mymessenger.switchWeatherSend();
-            stateTest.switchDoneSend();
-
-//            System.out.println("Weather Change");
-//            System.out.println(stateTest.getWeather());
-        }
     }
 
 
-	public void sendDataToServer () {
+    public void sendDataToServer () {
         //System.out.println("send data to server");
         //System.out.println(isometricMap.getCliqued());
-		if (isometricMap.getCliqued()){
+        if (isometricMap.getCliqued()){
             //System.out.println("walk");
-			me.walking(isometricMap.getLineCliqued(), isometricMap.getRowCliqued());
+            me.walking(isometricMap.getLineCliqued(), isometricMap.getRowCliqued());
             isometricMap.switchDoneSend();
-		}
+        }
         if (talking.getTalk()){
             //System.out.println("talk");
             if(talking.getMessage()!=""){
@@ -178,35 +146,33 @@ public class Paint extends JFrame {
             yelling.switchDoneSend();
         }
 
+    }
 
-	}
-	
-	
-	public void changeCursor (String cursorFile) {
-		  Toolkit toolkit = Toolkit.getDefaultToolkit();
-		  Image image = toolkit.getImage(cursorFile);
-		  Cursor c = toolkit.createCustomCursor(image , new Point(getX(),getY()), "img");
-		  setCursor (c);
-	}
-	
-	class Animator implements Runnable {
-		private Thread thread;
-		public Animator () {
-			thread = new Thread (this);
-			thread.start();
 
-		}
-		
-		public void run () {
+    public void changeCursor (String cursorFile) {
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Image image = toolkit.getImage(cursorFile);
+        Cursor c = toolkit.createCustomCursor(image , new Point(getX(),getY()), "img");
+        setCursor (c);
+    }
 
-			while (true) {
-			try {
-				thread.sleep(500);
-			}catch (InterruptedException e) {}
-			
-			repaint ();
-			}
-		}
-	}
+    class Animator implements Runnable {
+        private Thread thread;
+
+        public Animator () {
+            thread = new Thread (this);
+            thread.start();
+        }
+
+        public void run () {
+            while (true) {
+                try {
+                    thread.sleep(10);
+                }catch (InterruptedException e) {}
+
+                repaint ();
+            }
+        }
+    }
 
 }
