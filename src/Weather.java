@@ -23,12 +23,16 @@ public class Weather {
 		private int TIME_CHANGE;
 		
 		public Weather (Object weatherFetch) {
+
 			weather = (String)weatherFetch;
+            if (!weather.equals(null)){
+            //System.out.println("weather fecth"+weather);
 			generateClouds();
 			generateRain();
 			generateSnow();
 			delay= 40;
 			new WeatherChanging ();
+            }
 		}
 		
 		public void generateClouds () {

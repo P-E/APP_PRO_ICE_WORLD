@@ -63,9 +63,12 @@ public class FetchStateTest {
         Long timeWeatherLastChange = (Long) weather.get("last_change");// in Unix time
         weatherCondition = weather.get("condition");
         Object status = array.get("status"); // not know yet what can it do
+        Paint.weatherState = weatherCondition;
+        //System.out.println("push"+Paint.weatherState);
         if(!weatherCondition.equals(weatherOldCondition)){
             doneSend = true;
             weatherOldCondition = weatherCondition;
+
             //System.out.println(weatherOldCondition);
             Paint.mymessenger.isWeatherSend = true;
         }

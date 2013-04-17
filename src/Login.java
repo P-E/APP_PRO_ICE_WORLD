@@ -256,6 +256,7 @@ public class Login extends JFrame {
                         ICEWorldImmigration immigration = new ICEWorldImmigration(me);
                         boolean loginSuccess = immigration.login(passwordFromField);
                         //System.out.println(loginSuccess);
+                        immigration.logout();
                         if(loginSuccess){
                             me.setPassword(passwordFromField);
 

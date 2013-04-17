@@ -103,7 +103,7 @@ public class Paint extends JFrame {
         try {
 
             stateTest = new FetchStateTest();
-
+            weather = new Weather(weatherState);
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
