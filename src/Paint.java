@@ -79,6 +79,7 @@ public class Paint extends JFrame {
 		addMouseListener(isometricMap);
 		addMouseMotionListener(isometricMap);
 		addMouseWheelListener(isometricMap);
+		addKeyListener(isometricMap);
 		//setBackground(new Color(0,162,232));
 		changeCursor("sword.gif");
 		new Animator ();
@@ -113,7 +114,7 @@ public class Paint extends JFrame {
 		buffer=image.getGraphics();
 		isoBackground.paintIsoBackground(buffer);
 		isometricMap.paintMap(buffer,getWidth(),getHeight());
-		talking.paintTalking(buffer, isometricMap.getCharPosition());
+		talking.paintTalking(buffer, isometricMap.getCharPosition(),isometricMap.getZoomLevel());
 		buffer.setColor(Color.WHITE);
 		weather.paintWeather(buffer);
 		yelling.paintYelling(buffer);

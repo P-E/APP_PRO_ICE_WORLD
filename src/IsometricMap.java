@@ -2,6 +2,9 @@
 
 import java.applet.Applet;
 import java.awt.*;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -12,7 +15,7 @@ import javax.swing.*;
 
 
 
-public class IsometricMap extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener {
+public class IsometricMap extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener {
 	
 	private int MAX_X = Toolkit.getDefaultToolkit().getScreenSize().width;
 	private int MAX_Y = Toolkit.getDefaultToolkit().getScreenSize().height;
@@ -23,7 +26,7 @@ public class IsometricMap extends JPanel implements MouseListener, MouseMotionLi
 	private int width, height;
 	private int zoomLevel;
 	private Image avatar;
-	private boolean cliqued, isMovingLinebyLine, isMovingRowbyRow;
+	private boolean cliqued, isMovingLinebyLine, isMovingRowbyRow,ctrlPressed,plusPressed,minusPressed,isZoomable;
 	private Point middlePoint, origin, squareCliquedPoint;
     private boolean doneSend;
 
@@ -40,7 +43,10 @@ public class IsometricMap extends JPanel implements MouseListener, MouseMotionLi
         	k =0;
         	zoomLevel = 1;
         	avatar = getToolkit().getImage("images/avatar.png");
-
+        	ctrlPressed = false;
+			plusPressed = false;
+			minusPressed = false;
+			isZoomable = true;
 
         }
 
@@ -288,4 +294,63 @@ public class IsometricMap extends JPanel implements MouseListener, MouseMotionLi
 		public void mouseReleased(MouseEvent e) {}
 
 		public void mouseDragged(MouseEvent e) {}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+
+	        if(KeyEvent.VK_CONTROL==e.getKeyCode())
+	        {
+	            ctrlPressed=true;
+	        }
+
+	        if(KeyEvent.VK_P==e.getKeyCode())
+	        {
+	            plusPressed=true;
+	        }
+	        
+	        if(KeyEvent.VK_M==e.getKeyCode())
+	        {
+	            minusPressed=true;
+	        }
+
+
+	        if(ctrlPressed && plusPressed && isZoomable && zoomLevel <10)
+	        {
+	            zoomLevel++;
+	            isZoomable = false;
+	        }
+	        
+	        else if (ctrlPressed && minusPressed && isZoomable && zoomLevel >1){
+	        	
+	        	zoomLevel--;
+	            isZoomable = false;
+	        }
+			
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+	        if(KeyEvent.VK_CONTROL==e.getKeyCode())
+	        {
+	            ctrlPressed=false;
+	        }
+
+	        if(KeyEvent.VK_P==e.getKeyCode())
+	        {
+	            plusPressed=false;
+	        }
+			
+			if(KeyEvent.VK_M==e.getKeyCode())
+	        {
+	            minusPressed=false;
+	        }
+			
+			isZoomable = true;
+		}
+
+		@Override
+		public void keyTyped(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
 }
