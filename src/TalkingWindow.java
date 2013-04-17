@@ -20,7 +20,11 @@ public class TalkingWindow extends JFrame{
 
     //Messenger messenger = new Messenger();
         public TalkingWindow(){
+        	
+        	this.setAlwaysOnTop(true);
+        	//this.setUndecorated(true);
             this.setLayout(new BorderLayout());
+           
             JPanel talkPanel = new JPanel();
             JLabel talkSign = new JLabel("Talk");
             talkMsg = new JTextField(10);
@@ -43,13 +47,16 @@ public class TalkingWindow extends JFrame{
 
             JPanel logoutPanel = new JPanel();
             JButton logout = new JButton("Logout");
+            JButton help = new JButton ("Help");
+            logoutPanel.add(help);
             logoutPanel.add(logout);
             this.add(logoutPanel,BorderLayout.SOUTH);
             setVisible(true);
             setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
             getRootPane().setWindowDecorationStyle(JRootPane.NONE);
             toFront();
-            this.setAlwaysOnTop(true);
+            
+          
 
 
             submitTalkButton.addActionListener(new ActionListener() {
@@ -78,6 +85,13 @@ public class TalkingWindow extends JFrame{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     Paint.logout();
+                }
+            });
+            
+            help.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    new tabPane ();
                 }
             });
         }

@@ -14,8 +14,10 @@ import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.parser.ParserDelegator;
 
-class tabPane extends JFrame
+class tabPane extends JDialog
 {
+	private int MAX_X = Toolkit.getDefaultToolkit().getScreenSize().width;
+	private int MAX_Y = Toolkit.getDefaultToolkit().getScreenSize().height;
 	private JTabbedPane tabPane;	
 	private	JPanel	panel1;
 	private	JPanel	panel2;
@@ -27,8 +29,8 @@ class tabPane extends JFrame
 
 
 	public tabPane()
-	{
-
+	{	
+		setVisible(true);
 		setTitle( "Tabbed Pane Application" );
 		setSize( 1450, 1000 );
 		setBackground( Color.gray );
@@ -52,6 +54,9 @@ class tabPane extends JFrame
 		
 		tabPane.setTabPlacement(JTabbedPane.LEFT);
 		topPanel.add( tabPane, BorderLayout.CENTER );
+		this.pack();
+        this.setSize(780, 520);
+        this.setLocation((MAX_X-this.getWidth())/2, (MAX_Y-this.getHeight())/2);
 
 	}
 
@@ -193,13 +198,8 @@ class tabPane extends JFrame
 	    
 	}
 
-    // Main method to get things started
-	public static void main( String args[] )
-	{
-		// Create an instance of the test application
-		tabPane mainFrame	= new tabPane();
-		mainFrame.setVisible( true );
-	}
+ 
+
 	public static void doLoadCommand(JTextComponent textComponent,
 		      String filename) {
 		    FileReader reader = null;
