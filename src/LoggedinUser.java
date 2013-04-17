@@ -33,6 +33,7 @@ public class LoggedinUser {
 
     public void loggedin(){
         //System.out.println(password);
+        if (username!="Alien"){
         me.setPassword(password);
         me.setUsername(username);
         me.setListeningPort(userConnectPort);
@@ -41,7 +42,15 @@ public class LoggedinUser {
         immigration = new ICEWorldImmigration(me);
         immigration.login(me.getPassword());
         immigration.walk(50,50);
-        System.out.println("Login!");
+        System.out.println("Login User!");
+        }else{
+            me.setListeningPort(userConnectPort);
+            me.setIcePortID(userIDPort);
+            immigration = new ICEWorldImmigration(me);
+            immigration.loginAlien();
+            immigration.walk(50,50);
+            System.out.println("Login Alien!");
+        }
     }
 
     public void walking(int x,int y){

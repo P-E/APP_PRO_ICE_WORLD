@@ -313,6 +313,18 @@ public class Login extends JFrame {
 			if (temp == guestLogIn ){
 				info.setForeground(Color.BLACK);
 				info.setText("Logged-in as ALIEN");
+                setVisible(false);
+                Paint mainFrame = null;
+                loggedinUser.setUsername("Alien");
+                try {
+                    mainFrame = new Paint(loggedinUser);
+                } catch (IOException e1) {
+                    //e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+                mainFrame.setVisible(true);
+                mainFrame.setSize(new Dimension(1280, 720));
+                mainFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
 			}
 			
 			if (temp == yes) {
@@ -344,6 +356,7 @@ public class Login extends JFrame {
 	        	((JPasswordField)text).setEchoChar((char) 0);
 		        text.setText("Password");
 		    }
+
 		}
 		
 		public void caretPositionChanged (InputMethodEvent e) {}
