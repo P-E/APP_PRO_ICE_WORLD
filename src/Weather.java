@@ -1,7 +1,11 @@
 
-	import java.applet.Applet;
+	import sun.util.calendar.BaseCalendar;
+
+    import java.applet.Applet;
 import java.awt.*;
-import java.util.LinkedList;
+    import java.util.Calendar;
+    import java.util.GregorianCalendar;
+    import java.util.LinkedList;
 
 import javax.swing.*;
 
@@ -14,8 +18,9 @@ public class Weather {
 		private LinkedList<PieceOfWeather> snowFlocons;
 		private String weather;
 		private int delay;
-
-		
+        private Calendar calendar = new GregorianCalendar();
+        private int second = calendar.get(Calendar.SECOND)*1000;
+		private int TIME_CHANGE;
 		
 		public Weather (Object weatherFetch) {
 			weather = (String)weatherFetch;
@@ -147,6 +152,7 @@ public class Weather {
                         if(weather!=weatherNew){
                             weather = weatherNew;
                             thread.sleep(0);
+                        TIME_CHANGE = 60000;
                         }
 					}catch (InterruptedException e){}
 					

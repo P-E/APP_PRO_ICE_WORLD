@@ -72,7 +72,7 @@ public class Paint extends JFrame {
 //        this.add(talkPanel,BorderLayout.SOUTH);
 
 
-        weather = new Weather (weatherState);
+        //weather = new Weather (weatherState);
 		talking = new Talking ("", TALK_VISIBLE_DURATION);
 		yelling = new Yelling ("");
 
@@ -81,12 +81,12 @@ public class Paint extends JFrame {
 		addMouseWheelListener(isometricMap);
 		addKeyListener(isometricMap);
 		//setBackground(new Color(0,162,232));
-		changeCursor("sword.gif");
+		//changeCursor("sword.gif");
 		new Animator ();
 		this.pack();
         me.loggedin();
         stateTest = new FetchStateTest();
-
+        weather = new Weather(weatherState);
 		//new Music ("music.wav");
 
 	}
@@ -145,7 +145,6 @@ public class Paint extends JFrame {
             mymessenger.switchYellSend();
         }
         if(stateTest.getWeather()){
-
             weatherState = stateTest.getWeatherCondition();
             weather = new Weather(weatherState);
             mymessenger.switchWeatherSend();
